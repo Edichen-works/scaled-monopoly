@@ -49,17 +49,14 @@ class Square {
       ];
   
 const Game = function(){
-    for (let i=0; i<boardInfo.length; i++) {
-        document.querySelector("#cell" + i + "-name") = game.square[i]
+    // for (let i=0; i<boardInfo.length; i++) {
+    //     document.querySelector("#cell" + i + "-name") = game.square[i]
+    // }
+    
+    const board = []
+    for (let i = 0; i < boardInfo.length; i++) {
+        card = document.querySelector(`#cell${i}`)
+            card.innerText = boardInfo[i].name + " "+ boardInfo[i].pricetext
     }
 }
-// Game();
-
-const board = []
-for (let i = 0; i < boardInfo.length; i++) {
-    card = document.querySelector(`#cell${i}`)
-        card.innerText = boardInfo[i].name + " "+ boardInfo[i].pricetext
-}
-
-const abc= "hi";
-console.log(abc);
+Game();
