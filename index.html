@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monopoly</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="app.js" defer></script>
+    <script src="square.js" defer></script>
+
+  </head>
+  <body>
+    <div id="refresh">
+		Refresh this page to start a new game.
+	</div>
+    <table id="board">
+      <tr>
+        <td class="cell board-corner" id="cell20"></td>
+        <td class="cell board-top" id="cell21"></td>
+        <td class="cell board-top" id="cell22"></td>
+        <td class="cell board-top" id="cell23"></td>
+        <td class="cell board-top" id="cell24"></td>
+        <td class="cell board-top" id="cell25"></td>
+        <td class="cell board-top" id="cell26"></td>
+        <td class="cell board-top" id="cell27"></td>
+        <td class="cell board-top" id="cell28"></td>
+        <td class="cell board-top" id="cell29"></td>
+        <td class="cell board-corner" id="cell30"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell19"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell31"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell18"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell32"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell17"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell33"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell16"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell34"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell15"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell35"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell14"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell36"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell13"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell37"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell12"></td>
+        <td colspan="9" class="board-center"></td>
+        <td class="cell board-right" id="cell38"></td>
+      </tr>
+      <tr>
+        <td class="cell board-left" id="cell11"></td>
+        <td colspan="9" class="board-center">
+          <div id="jail"></div>
+        </td>
+        <td class="cell board-right" id="cell39"></td>
+      </tr>
+      <tr>
+        <td class="cell board-corner" id="cell10"></td>
+        <td class="cell board-bottom" id="cell9"></td>
+        <td class="cell board-bottom" id="cell8"></td>
+        <td class="cell board-bottom" id="cell7"></td>
+        <td class="cell board-bottom" id="cell6"></td>
+        <td class="cell board-bottom" id="cell5"></td>
+        <td class="cell board-bottom" id="cell4"></td>
+        <td class="cell board-bottom" id="cell3"></td>
+        <td class="cell board-bottom" id="cell2"></td>
+        <td class="cell board-bottom" id="cell1"></td>
+        <td class="cell board-corner" id="cell0"></td>
+      </tr>
+    </table>
+    <div id="setup">
+		<div style="margin-bottom: 20px;">
+			Number of Players:
+			<select id="playernumber" title="Number of Players:">
+                <option>1</option>
+				<option selected="selected">2</option>
+			</select>
+		</div>
+
+		<div id="player1input" class="player-input">
+			Player 1: <input type="text" id="player1name" title="Player name" maxlength="16" value="Player 1" />
+			<select id="player1color" title="Player color">
+				<option selected="selected" style="color: black;">Black</option>
+				<option style="color: blue;">Blue</option>
+				<option style="color: maroon;">Maroon</option>
+				<option style="color: navy;">Navy</option>
+				<option style="color: orange;">Orange</option>
+				<option style="color: purple;">Purple</option>
+				<option style="color: silver;">Silver</option>
+				<option style="color: teal;">Teal</option>
+				<option style="color: yellow;">Yellow</option>
+			</select>
+			<select id="player1ai" title="Choose whether this player is controled by a human or by the computer." onclick="document.getElementById('player1name').disabled = this.value !== '0';">
+				<option value="0" selected="selected">Human</option>
+				<option value="1">AI (Test)</option>
+			</select>
+		</div>
+
+		<div id="player2input" class="player-input">
+			Player 2: <input type="text" id="player2name" title="Player name" maxlength="16" value="Player 2" />
+			<select id="player2color" title="Player color">
+				<option style="color: aqua;">Aqua</option>
+				<option style="color: black;">Black</option>
+				<option selected="selected" style="color: blue;">Blue</option>
+				<option style="color: fuchsia;">Fuchsia</option>
+				<option style="color: gray;">Gray</option>
+				<option style="color: green;">Green</option>
+				<option style="color: lime;">Lime</option>
+				<option style="color: maroon;">Maroon</option>
+				<option style="color: navy;">Navy</option>
+				<option style="color: olive;">Olive</option>
+				<option style="color: orange;">Orange</option>
+				<option style="color: purple;">Purple</option>
+				<option style="color: red;">Red</option>
+				<option style="color: silver;">Silver</option>
+				<option style="color: teal;">Teal</option>
+				<option style="color: yellow;">Yellow</option>
+			</select>
+			<select id="player2ai" title="Choose whether this player is controled by a human or by the computer." onclick="document.getElementById('player2name').disabled = this.value !== '0';">
+				<option value="0" selected="selected">Human</option>
+				<option value="1">AI (Test)</option>
+			</select>
+		</div>
+
+		
+
+		<div style="margin: 20px 0px;">
+			<input type="button" value="Start Game" onclick="setup();" title="Begin playing." />
+		</div>
+
+		<div id="noF5">Note: Refreshing this page or navigating away from it may end your game without warning.</div>
+	</div>
+
+
+
+  </body>
+</html>
