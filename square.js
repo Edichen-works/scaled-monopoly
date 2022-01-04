@@ -60,3 +60,6 @@ for (let i = 0; i < boardInfo.length; i++) {
     card = document.querySelector(`#cell${i}`)
         card.innerText = boardInfo[i].name + " "+ boardInfo[i].pricetext
 }
+
+const abc= "hi";
+console.log(abc);
