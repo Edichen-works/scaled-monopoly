@@ -7,8 +7,8 @@ let currentPlayer = 0; //current player 0 = Edi, 1 = Aii
 // let nextPosition1 = 0;
 // let nextPosition2 =0;
 const players = [
-  { name: "player-1", wallet: 1000, property: [], score: 0 },
-  { name: "player-2", wallet: 1000, property: [], score: 0 },
+  { name: "Edi", wallet: 1000, property: [], score: 0 },
+  { name: "Aii-i", wallet: 1000, property: [], score: 0 },
 ]; //declaring properties for arr.obj for player1&2
 
 const die = () => {
@@ -65,6 +65,22 @@ const maxBox = (move, board) => {
   }
 }; //max steps of board = 16 (0-15), if p1 pos = 15, roll 3 = 18? on board should go to 2* hence -16 to get right pos
 
+const add200 =()=>{
+    if (currentPlayer===0 && player1Move){
+        maxBox(player1Move, boardinfo1);
+        players[currentPlayer].wallet += 200;
+        alert(`Going pass Start line gives you: $200`);
+        console.log(players[currentPlayer].wallet);
+
+
+    } else if (currentPlayer===1){
+
+
+        players[currentPlayer].wallet += 200;
+        alert(`Going pass Start line gives you: $200`);
+        console.log(players[currentPlayer].wallet);
+    }
+}
 const buyProperty = (move, boardinfo1object) => {
   if (currentPlayer === 0) {
     players[currentPlayer].wallet -= boardinfo1object[move].price;
