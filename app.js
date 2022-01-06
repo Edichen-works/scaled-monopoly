@@ -22,22 +22,22 @@ die(); //calling die to get number 2-12
 const main = () => {}; //currently empty
 
 const boardinfo1 = [
-  { name: "Start", price: "0", pos: 0 },
-  { name: "Jurong East", price: 100, pos: 1 },
-  { name: "Clementi", price: 150, pos: 2 },
-  { name: "Dover", price: 300, pos: 3 },
-  { name: "Buona Vista", price: 200, pos: 4 },
-  { name: "CommonWealth", price: 50, pos: 5 },
-  { name: "Queenstown", price: 500, pos: 6 },
-  { name: "Redhill", price: 240, pos: 7 },
-  { name: "Tiong Bahru", price: 330, pos: 8 },
-  { name: "Outram Park", price: 200, pos: 9 },
-  { name: "Tanjong Pagar", price: 190, pos: 10 },
-  { name: "Raffles Place", price: 180, pos: 11 },
-  { name: "Dhoby Ghaut", price: 400, pos: 12 },
-  { name: "Somerset", price: 220, pos: 13 },
-  { name: "Orchard", price: 330, pos: 14 },
-  { name: "Marina Bay Sands", price: 400, pos: 15 },
+  { name: "Start", price: 0, pos: 0, owner: "" },
+  { name: "Jurong East", price: 100, pos: 1, owner: "" },
+  { name: "Clementi", price: 150, pos: 2, owner: "" },
+  { name: "Dover", price: 300, pos: 3, owner: "" },
+  { name: "Buona Vista", price: 200, pos: 4, owner: "" },
+  { name: "CommonWealth", price: 50, pos: 5, owner: "" },
+  { name: "Queenstown", price: 500, pos: 6, owner: "" },
+  { name: "Redhill", price: 240, pos: 7, owner: "" },
+  { name: "Tiong Bahru", price: 330, pos: 8, owner: "" },
+  { name: "Outram Park", price: 200, pos: 9, owner: "" },
+  { name: "Tanjong Pagar", price: 190, pos: 10, owner: "" },
+  { name: "Raffles Place", price: 180, pos: 11, owner: "" },
+  { name: "Dhoby Ghaut", price: 400, pos: 12, owner: "" },
+  { name: "Somerset", price: 220, pos: 13, owner: "" },
+  { name: "Orchard", price: 330, pos: 14, owner: "" },
+  { name: "Marina Bay Sands", price: 400, pos: 15, owner: "" },
 ]; //global board items
 const togglePlayer = () => {
   currentPlayer = currentPlayer === 0 ? 1 : 0; //if 0= true, return 1, if false, return 0
@@ -65,6 +65,23 @@ const maxBox = (move, board) => {
   }
 }; //max steps of board = 16 (0-15), if p1 pos = 15, roll 3 = 18? on board should go to 2* hence -16 to get right pos
 
+const buyProperty = (move, boardinfo1object) => {
+  if (currentPlayer === 0) {
+    players[currentPlayer].wallet -= boardinfo1object[move].price;
+  } else if (currentPlayer === 1) {
+    players[currentPlayer].wallet -= boardinfo1object[move].price;
+  }
+};
+
+const didPlayerWin = () => {
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].wallet <= 0) {
+      alert(`${players[i].name} lost the game`);
+    }
+  }
+  return;
+};
+
 const clickRoll = () => {
   maxBox(player1Move, boardinfo1);
   let randomNum = die(); //store dice output in randomNum
@@ -75,7 +92,9 @@ const clickRoll = () => {
     maxBox(player1Move, boardinfo1);
     tileP1B = document.querySelector(`.pOne${player1Move}`);
     tileP1B.classList.toggle("black");
+    buyProperty(player1Move, boardinfo1);
     togglePlayer();
+    console.log("Player 1 Wallet", players[0].wallet);
     console.log("Player1 Pos", player1Move);
     console.log("Player1 Dice roll", randomNum);
     // tile.classList.remove("black");
@@ -86,18 +105,17 @@ const clickRoll = () => {
     maxBox(player2Move, boardinfo1);
     tileP2B = document.querySelector(`.pTwo${player2Move}`);
     tileP2B.classList.toggle("pink");
+    buyProperty(player2Move, boardinfo1);
     togglePlayer();
+    console.log("Player 2 Wallet", players[1].wallet);
     console.log("Player2 Pos", player2Move);
     console.log("Player2 Dice roll", randomNum);
-
-    // tile.classList.remove("black");
   }
-  //   if (currentPlayer===0){
-  //   }
+  didPlayerWin();
 }; // Starting function, press roll to trigger dice roll
-
-restart();
+//winning condition
 // clickRoll();
+restart();
 
 let ROLLBUTTON = document.getElementById("rollButton");
 ROLLBUTTON.addEventListener("click", clickRoll);
