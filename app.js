@@ -78,7 +78,9 @@ const buyProperty = (move, boardinfo1object) => {
     players[currentPlayer].wallet -= boardinfo1object[move].price;
     displayProperty(players[currentPlayer].position, boardinfo);
     let message1 = document.querySelector(".messageParagraph");
-    message1.innerText = `$ ${boardinfo1object[move].price} has been deducted`;
+    message1 = `$ ${(boardinfo1object[move].owner =
+      players[currentPlayer].name)}`;
+
     boardinfo1object[move].owner = players[currentPlayer].name;
   }
 };
