@@ -18,7 +18,7 @@ div {
 
 .cell {
   outline: 0.15em solid black;
-  margin: auto;
+  vertical-align: middle;
   background-color: gray;
   display: table-cell;
   width: 12em;

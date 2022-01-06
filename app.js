@@ -1,14 +1,8 @@
-let player1Move = 0; //p1 move how many position
-let player2Move = 0; //p2 move how many position
 let currentPlayer = 0; //current player 0 = Edi, 1 = Aii
-// let start = true;
-// let currentPosition1 = 0;
-// let currentPosition2 = 0;
-// let nextPosition1 = 0;
-// let nextPosition2 =0;
+
 const players = [
-  { name: "Edi", wallet: 1000, property: [], score: 0 },
-  { name: "Aii-i", wallet: 1000, property: [], score: 0 },
+  { name: "Edi", wallet: 1500, position: 0 },
+  { name: "Aii-i", wallet: 1500, position: 0 },
 ]; //declaring properties for arr.obj for player1&2
 
 const die = () => {
@@ -19,128 +13,177 @@ const die = () => {
 
 die(); //calling die to get number 2-12
 
-const main = () => {}; //currently empty
-
-const boardinfo1 = [
-  { name: "Start", price: 0, pos: 0, owner: "" },
-  { name: "Jurong East", price: 100, pos: 1, owner: "" },
-  { name: "Clementi", price: 150, pos: 2, owner: "" },
-  { name: "Dover", price: 300, pos: 3, owner: "" },
-  { name: "Buona Vista", price: 200, pos: 4, owner: "" },
-  { name: "CommonWealth", price: 50, pos: 5, owner: "" },
-  { name: "Queenstown", price: 500, pos: 6, owner: "" },
-  { name: "Redhill", price: 240, pos: 7, owner: "" },
-  { name: "Tiong Bahru", price: 330, pos: 8, owner: "" },
-  { name: "Outram Park", price: 200, pos: 9, owner: "" },
-  { name: "Tanjong Pagar", price: 190, pos: 10, owner: "" },
-  { name: "Raffles Place", price: 180, pos: 11, owner: "" },
-  { name: "Dhoby Ghaut", price: 400, pos: 12, owner: "" },
-  { name: "Somerset", price: 220, pos: 13, owner: "" },
-  { name: "Orchard", price: 330, pos: 14, owner: "" },
-  { name: "Marina Bay Sands", price: 400, pos: 15, owner: "" },
+const boardinfo = [
+  { name: "Start", price: 0, owner: "" },
+  { name: "Jurong East", price: 100, owner: "" },
+  { name: "Clementi", price: 150, owner: "" },
+  { name: "Dover", price: 300, owner: "" },
+  { name: "Buona Vista", price: 200, owner: "" },
+  { name: "CommonWealth", price: 50, owner: "" },
+  { name: "Queenstown", price: 500, owner: "" },
+  { name: "Redhill", price: 240, owner: "" },
+  { name: "Tiong Bahru", price: 330, owner: "" },
+  { name: "Outram Park", price: 200, owner: "" },
+  { name: "Tanjong Pagar", price: 190, owner: "" },
+  { name: "Raffles Place", price: 180, owner: "" },
+  { name: "Dhoby Ghaut", price: 400, owner: "" },
+  { name: "Somerset", price: 220, owner: "" },
+  { name: "Orchard", price: 330, owner: "" },
+  { name: "Marina Bay Sands", price: 400, owner: "" },
 ]; //global board items
 const togglePlayer = () => {
   currentPlayer = currentPlayer === 0 ? 1 : 0; //if 0= true, return 1, if false, return 0
   return currentPlayer;
 }; //toggle function to switch between p1&2
 
-const restart = () => {
+const displaySq0Token = () => {
   const tileP1 = document.querySelector(".pOne0");
   tileP1.classList.add("black");
   const tileP2 = document.querySelector(".pTwo0");
   tileP2.classList.add("pink");
-}; //restart function to set p1&2 at start line
+};
 
-const maxBox = (move, board) => {
+const passGoAndCheckMaxBoard = (move, board) => {
   const withinBoard = -16;
-  if (currentPlayer === 0) {
-    if (move >= board.length) {
-      player1Move += withinBoard;
-    }
-  }
-  if (currentPlayer === 1) {
-    if (move >= board.length) {
-      player2Move += withinBoard;
-    }
+  if (currentPlayer === 0 && move >= board.length) {
+    players[0].position += withinBoard;
+    players[currentPlayer].wallet += 200;
+    alert(`Going pass Start line gives you $200`);
+    console.log("Player1 Updated Wallet", players[currentPlayer].wallet);
+  } else if (currentPlayer === 1 && move >= board.length) {
+    players[1].position += withinBoard;
+    players[currentPlayer].wallet += 200;
+    alert(`Going pass Start line gives you: $200`);
+    console.log("Player2 Updated Wallet", players[currentPlayer].wallet);
   }
 }; //max steps of board = 16 (0-15), if p1 pos = 15, roll 3 = 18? on board should go to 2* hence -16 to get right pos
-
-const add200 =()=>{
-    if (currentPlayer===0 && player1Move){
-        maxBox(player1Move, boardinfo1);
-        players[currentPlayer].wallet += 200;
-        alert(`Going pass Start line gives you: $200`);
-        console.log(players[currentPlayer].wallet);
-
-
-    } else if (currentPlayer===1){
-
-
-        players[currentPlayer].wallet += 200;
-        alert(`Going pass Start line gives you: $200`);
-        console.log(players[currentPlayer].wallet);
-    }
-}
-const buyProperty = (move, boardinfo1object) => {
+const displayProperty = (move, boardinfo1object) => {
   if (currentPlayer === 0) {
-    players[currentPlayer].wallet -= boardinfo1object[move].price;
+    // players[currentPlayer].property =
+    const dom = document.createElement("p");
+    dom.className = "Edi-Property";
+    dom.innerText = boardinfo1object[move].name;
+    let trial1 = document.getElementById("edi");
+    trial1.appendChild(dom);
   } else if (currentPlayer === 1) {
+    const dom = document.createElement("p");
+    dom.className = "Ai-i-Property";
+    dom.innerText = boardinfo1object[move].name;
+    let trial2 = document.getElementById("Ai-i");
+    trial2.appendChild(dom);
+  }
+};
+const buyProperty = (move, boardinfo1object) => {
+  if (!boardinfo1object[move].owner) {
     players[currentPlayer].wallet -= boardinfo1object[move].price;
+    displayProperty(players[currentPlayer].position, boardinfo);
+    let message1 = document.querySelector(".messageParagraph");
+    message1.innerText = `$ ${boardinfo1object[move].price} has been deducted`;
+    boardinfo1object[move].owner = players[currentPlayer].name;
   }
 };
 
 const didPlayerWin = () => {
-  for (let i = 0; i < players.length; i++) {
-    if (players[i].wallet <= 0) {
-      alert(`${players[i].name} lost the game`);
-    }
+  //   for (let i = 0; i < players.length; i++) {
+  let playerProperties = boardinfo.filter(
+    (property) => property.owner === players[currentPlayer].name
+  ).length;
+  if (players[currentPlayer].wallet <= 0) {
+    alert(`${players[currentPlayer].name} lost the game`);
+    displaySq0Token();
+    let tileP1B = document.querySelector(`.pOne${players[0].position}`);
+    tileP1B.classList.toggle("black");
+    let tileP2B = document.querySelector(`.pTwo${players[1].position}`);
+    tileP2B.classList.toggle("pink");
+  } else if (playerProperties > 2) {
+    alert(`${players[currentPlayer].name} won the game`);
+    displaySq0Token();
+    let tileP1B = document.querySelector(`.pOne${players[0].position}`);
+    tileP1B.classList.toggle("black");
+    let tileP2B = document.querySelector(`.pTwo${players[1].position}`);
+    tileP2B.classList.toggle("pink");
   }
+  //   }
   return;
 };
 
 const clickRoll = () => {
-  maxBox(player1Move, boardinfo1);
+  passGoAndCheckMaxBoard(players[0].position, boardinfo);
   let randomNum = die(); //store dice output in randomNum
   if (currentPlayer === 0) {
-    let tileP1B = document.querySelector(`.pOne${player1Move}`);
+    let tileP1B = document.querySelector(`.pOne${players[0].position}`);
     tileP1B.classList.toggle("black");
-    player1Move += randomNum;
-    maxBox(player1Move, boardinfo1);
-    tileP1B = document.querySelector(`.pOne${player1Move}`);
+    players[0].position += randomNum;
+    passGoAndCheckMaxBoard(players[0].position, boardinfo);
+    tileP1B = document.querySelector(`.pOne${players[0].position}`);
     tileP1B.classList.toggle("black");
-    buyProperty(player1Move, boardinfo1);
+    buyProperty(players[0].position, boardinfo);
+    displayName();
+    displayMoney();
+    displayDice(players[0].position);
     togglePlayer();
     console.log("Player 1 Wallet", players[0].wallet);
-    console.log("Player1 Pos", player1Move);
+    console.log("Player1 Pos", players[0].position);
     console.log("Player1 Dice roll", randomNum);
-    // tile.classList.remove("black");
   } else if (currentPlayer === 1) {
-    let tileP2B = document.querySelector(`.pTwo${player2Move}`);
+    let tileP2B = document.querySelector(`.pTwo${players[1].position}`);
     tileP2B.classList.toggle("pink");
-    player2Move += randomNum;
-    maxBox(player2Move, boardinfo1);
-    tileP2B = document.querySelector(`.pTwo${player2Move}`);
+    players[1].position += randomNum;
+    passGoAndCheckMaxBoard(players[1].position, boardinfo);
+    tileP2B = document.querySelector(`.pTwo${players[1].position}`);
     tileP2B.classList.toggle("pink");
-    buyProperty(player2Move, boardinfo1);
+    buyProperty(players[1].position, boardinfo);
+    displayName();
+    displayMoney();
+    displayDice(players[1].position);
     togglePlayer();
     console.log("Player 2 Wallet", players[1].wallet);
-    console.log("Player2 Pos", player2Move);
+    console.log("Player2 Pos", players[1].position);
     console.log("Player2 Dice roll", randomNum);
   }
+  console.table("boardinfo", boardinfo);
   didPlayerWin();
-}; // Starting function, press roll to trigger dice roll
-//winning condition
-// clickRoll();
-restart();
+};
 
-let ROLLBUTTON = document.getElementById("rollButton");
-ROLLBUTTON.addEventListener("click", clickRoll);
-
-const loadBoard = () => {
-  for (let i = 0; i < boardinfo1.length; i++) {
-    let card = document.querySelector(`.sq${i}`);
-    card.innerText = boardinfo1[i].name + " " + "$" + boardinfo1[i].price;
+const displayName = () => {
+  if (currentPlayer === 0) {
+    let display1 = document.querySelector(`#currentTurn`);
+    display1.innerText = players[0].name;
+  } else if (currentPlayer === 1) {
+    let display2 = document.querySelector(`#currentTurn`);
+    display2.innerText = players[1].name;
   }
 };
-loadBoard(); //populate board
+const displayMoney = () => {
+  let display1 = document.querySelector(`.p1Money`);
+  display1.innerText = players[0].wallet;
+  let display2 = document.querySelector(`.p2Money`);
+  display2.innerText = players[1].wallet;
+};
+const displayDice = (move) => {
+  if (currentPlayer === 0 && move > 0) {
+    let displayDice1 = document.querySelector(`.diceRolled`);
+    displayDice1.innerText = players[0].position;
+  } else if (currentPlayer === 1 && move > 0) {
+    let displayDice2 = document.querySelector(`.diceRolled`);
+    displayDice2.innerText = players[1].position;
+  }
+};
+const loadBoard = () => {
+  for (let i = 0; i < boardinfo.length; i++) {
+    let card = document.querySelector(`.sq${i}`);
+    card.innerText = boardinfo[i].name + " " + "$" + boardinfo[i].price;
+  }
+};
+const main = () => {
+  displayMoney();
+  displayName();
+  displayDice(players[0].position);
+  displayDice(players[1].position);
+  loadBoard();
+  die();
+  let ROLLBUTTON = document.getElementById("rollButton");
+  ROLLBUTTON.addEventListener("click", clickRoll);
+  displaySq0Token();
+};
 main();
