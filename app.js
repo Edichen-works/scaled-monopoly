@@ -95,6 +95,8 @@ const didPlayerWin = () => {
     tileP1B.classList.toggle("black");
     let tileP2B = document.querySelector(`.pTwo${players[1].position}`);
     tileP2B.classList.toggle("pink");
+    displayMoneyAtEnd();
+    displayDiceAtEnd();
   } else if (playerProperties > 6) {
     alert(`${players[currentPlayer].name} won the game`);
     displaySq0Token();
@@ -102,6 +104,8 @@ const didPlayerWin = () => {
     tileP1B.classList.toggle("black");
     let tileP2B = document.querySelector(`.pTwo${players[1].position}`);
     tileP2B.classList.toggle("pink");
+    displayMoneyAtEnd();
+    displayDiceAtEnd();
   }
   return;
 };
@@ -160,14 +164,28 @@ const displayMoney = () => {
   display2.innerText = players[1].wallet;
 };
 const displayDice = (move) => {
-  if (currentPlayer === 0 && move > 0) {
-    let displayDice1 = document.querySelector(`.diceRolled`);
-    displayDice1.innerText = players[0].position;
-  } else if (currentPlayer === 1 && move > 0) {
-    let displayDice2 = document.querySelector(`.diceRolled`);
-    displayDice2.innerText = players[1].position;
-  }
+    if (currentPlayer === 0 && move > 0) {
+        let displayDice1 = document.querySelector(`.diceRolled`);
+        displayDice1.innerText = players[0].position;
+    } else if (currentPlayer === 1 && move > 0) {
+        let displayDice2 = document.querySelector(`.diceRolled`);
+        displayDice2.innerText = players[1].position;
+    }
 };
+const displayMoneyAtEnd = () => {
+    let display1 = document.querySelector(`.p1Money`);
+    players[0].wallet = 1500;
+    display1.innerText = players[0].wallet;
+    let display2 = document.querySelector(`.p2Money`);
+    players[1].wallet = 1500;
+    display2.innerText = players[1].wallet;
+  };
+const displayDiceAtEnd = () => {
+      let displayDice1 = document.querySelector(`.diceRolled`);
+      displayDice1.innerText = "";
+      let displayDice2 = document.querySelector(`.diceRolled`);
+      displayDice2.innerText = "";
+  };
 const loadBoard = () => {
   for (let i = 0; i < boardinfo.length; i++) {
     let card = document.querySelector(`.sq${i}`);
