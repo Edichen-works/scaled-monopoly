@@ -14,7 +14,7 @@ const die = () => {
 die(); //calling die to get number 2-12
 
 const boardinfo = [
-  { name: "Start", price: 0, owner: "" },
+  { name: "Go!", price: 0, owner: "" },
   { name: "Jurong East", price: 100, owner: "" },
   { name: "Clementi", price: 150, owner: "" },
   { name: "Dover", price: 300, owner: "" },
@@ -48,18 +48,17 @@ const passGoAndCheckMaxBoard = (move, board) => {
   if (currentPlayer === 0 && move >= board.length) {
     players[0].position += withinBoard;
     players[currentPlayer].wallet += 200;
-    alert(`Going pass Start line gives you $200`);
+    alert(`You'll get $200 after passing Go!`);
     console.log("Player1 Updated Wallet", players[currentPlayer].wallet);
   } else if (currentPlayer === 1 && move >= board.length) {
     players[1].position += withinBoard;
     players[currentPlayer].wallet += 200;
-    alert(`Going pass Start line gives you: $200`);
+    alert(`You'll get $200 after passing Go!`);
     console.log("Player2 Updated Wallet", players[currentPlayer].wallet);
   }
 }; //max steps of board = 16 (0-15), if p1 pos = 15, roll 3 = 18? on board should go to 2* hence -16 to get right pos
 const displayProperty = (move, boardinfo1object) => {
   if (currentPlayer === 0) {
-    // players[currentPlayer].property =
     const dom = document.createElement("p");
     dom.className = "Edi-Property";
     dom.innerText = boardinfo1object[move].name;
@@ -86,7 +85,6 @@ const buyProperty = (move, boardinfo1object) => {
 };
 
 const didPlayerWin = () => {
-  //   for (let i = 0; i < players.length; i++) {
   let playerProperties = boardinfo.filter(
     (property) => property.owner === players[currentPlayer].name
   ).length;
@@ -97,7 +95,7 @@ const didPlayerWin = () => {
     tileP1B.classList.toggle("black");
     let tileP2B = document.querySelector(`.pTwo${players[1].position}`);
     tileP2B.classList.toggle("pink");
-  } else if (playerProperties > 2) {
+  } else if (playerProperties > 6) {
     alert(`${players[currentPlayer].name} won the game`);
     displaySq0Token();
     let tileP1B = document.querySelector(`.pOne${players[0].position}`);
@@ -105,7 +103,6 @@ const didPlayerWin = () => {
     let tileP2B = document.querySelector(`.pTwo${players[1].position}`);
     tileP2B.classList.toggle("pink");
   }
-  //   }
   return;
 };
 
@@ -178,8 +175,8 @@ const loadBoard = () => {
   }
 };
 const main = () => {
-  displayMoney();
   displayName();
+  displayMoney();
   displayDice(players[0].position);
   displayDice(players[1].position);
   loadBoard();
